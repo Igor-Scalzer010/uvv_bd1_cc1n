@@ -37,17 +37,17 @@ SET search_path TO lojas, "$user", public;
 A tabela "produtos" possui duas "CONSTRAINT" sendo que, uma é para a coluna "preco_unitario" que está com apelido de "produtos_preco_unitario_ck", que no caso, o valor dentro dessa coluna não pode ser menor que zero.
 */
 CREATE TABLE lojas.produtos (
-                produto_id NUMERIC(38) NOT NULL,
-                nome VARCHAR(255) NOT NULL,
-                preco_unitario NUMERIC(10,2),
-                detalhes BYTEA,
-                imagem BYTEA,
-                imagem_mime_type VARCHAR(512),
-                imagem_arquivo VARCHAR(512),
-                imagem_charset VARCHAR(512),
-                imagem_ultima_atualizacao DATE,
-                CONSTRAINT produtos_pk PRIMARY KEY (produto_id),
-                CONSTRAINT produtos_preco_unitario_ck CHECK (preco_unitario >= 0)
+    produto_id                  NUMERIC(38) NOT NULL,
+    nome                        VARCHAR(255) NOT NULL,
+    preco_unitario              NUMERIC(10,2),
+    detalhes                    BYTEA,
+    imagem                      BYTEA,
+    imagem_mime_type            VARCHAR(512),
+    imagem_arquivo              VARCHAR(512),
+    imagem_charset              VARCHAR(512),
+    imagem_ultima_atualizacao   DATE,
+    CONSTRAINT produtos_pk PRIMARY KEY (produto_id),
+    CONSTRAINT produtos_preco_unitario_ck CHECK (preco_unitario >= 0)
 );
 
 COMMENT ON TABLE lojas.produtos IS 'Essa tabela serve para o cadastro dos produtos das lojas UVV.';
@@ -66,19 +66,19 @@ COMMENT ON COLUMN lojas.produtos.imagem_ultima_atualizacao IS 'Essa coluna serve
 A tabela "lojas" possui duas "CONSTRAINT" sendo que, uma é para a coluna "endereco_web" e "endereco_fisico" que está com apelido de "lojas_endereco_web_e_endereco_fisico_ck", que no caso, pelo menos uma delas deve estar com um valor preenchido.
 */
 CREATE TABLE lojas.lojas (
-                loja_id NUMERIC(38) NOT NULL,
-                nome VARCHAR(255) NOT NULL,
-                endereco_web VARCHAR(100),
-                endereco_fisico VARCHAR(512),
-                latitude NUMERIC,
-                longitude NUMERIC,
-                logo BYTEA,
-                logo_mime_type VARCHAR(512),
-                logo_arquivo VARCHAR(512),
-                logo_charset VARCHAR(512),
-                logo_ultima_atualizacao DATE,
-                CONSTRAINT lojas_pk PRIMARY KEY (loja_id),
-                CONSTRAINT lojas_endereco_web_e_endereco_fisico_ck CHECK (endereco_web IS NOT NULL OR endereco_fisico IS NOT NULL)
+    loja_id                     NUMERIC(38) NOT NULL,
+    nome                        VARCHAR(255) NOT NULL,
+    endereco_web                VARCHAR(100),
+    endereco_fisico             VARCHAR(512),
+    latitude                    NUMERIC,
+    longitude                   NUMERIC,
+    logo                        BYTEA,
+    logo_mime_type              VARCHAR(512),
+    logo_arquivo                VARCHAR(512),
+    logo_charset                VARCHAR(512),
+    logo_ultima_atualizacao     DATE,
+    CONSTRAINT lojas_pk PRIMARY KEY (loja_id),
+    CONSTRAINT lojas_endereco_web_e_endereco_fisico_ck CHECK (endereco_web IS NOT NULL OR endereco_fisico IS NOT NULL)
 );
 COMMENT ON TABLE lojas.lojas IS 'Essa tabela serve para o cadastro das lojas UVV.';
 COMMENT ON COLUMN lojas.lojas.loja_id IS 'Essa coluna serve para a indentificação das lojas UVV.';
@@ -97,12 +97,12 @@ COMMENT ON COLUMN lojas.lojas.logo_ultima_atualizacao IS 'Essa coluna serve para
 A tabela "estoques" possui duas "CONSTRAINTS" sendo que, uma é para a coluna "quantidade" que está com apelido de "estoques_quantidade_ck", que no caso, o valor desta coluna não pode ser menor que zero.
 */
 CREATE TABLE lojas.estoques (
-                estoque_id NUMERIC(38) NOT NULL,
-                loja_id NUMERIC(38) NOT NULL,
-                produto_id NUMERIC(38) NOT NULL,
-                quantidade NUMERIC(38) NOT NULL,
-                CONSTRAINT estoques_pk PRIMARY KEY (estoque_id),
-                CONSTRAINT estoques_quantidade_ck CHECK (quantidade >= 0)
+    estoque_id                  NUMERIC(38) NOT NULL,
+    loja_id                     NUMERIC(38) NOT NULL,
+    produto_id                  NUMERIC(38) NOT NULL,
+    quantidade                  NUMERIC(38) NOT NULL,
+    CONSTRAINT estoques_pk PRIMARY KEY (estoque_id),
+    CONSTRAINT estoques_quantidade_ck CHECK (quantidade >= 0)
 );
 COMMENT ON TABLE lojas.estoques IS 'Essa coluna serve para o controle de estoque das lojas UVV.';
 COMMENT ON COLUMN lojas.estoques.estoque_id IS 'Essa coluna é a identificação (ID) do stoque das lojas UVV.';
@@ -112,13 +112,13 @@ COMMENT ON COLUMN lojas.estoques.quantidade IS 'Essa coluna serve para cadastrar
 
 
 CREATE TABLE lojas.clientes (
-                cliente_id NUMERIC(38) NOT NULL,
-                email VARCHAR(255) NOT NULL,
-                nome VARCHAR(255) NOT NULL,
-                telefone1 VARCHAR(20),
-                telefone2 VARCHAR(20),
-                telefone3 VARCHAR(20),
-                CONSTRAINT clientes_pk PRIMARY KEY (cliente_id)
+    cliente_id                  NUMERIC(38) NOT NULL,
+    email                       VARCHAR(255) NOT NULL,
+    nome                        VARCHAR(255) NOT NULL,
+    telefone1                   VARCHAR(20),
+    telefone2                   VARCHAR(20),
+    telefone3                   VARCHAR(20),
+    CONSTRAINT clientes_pk PRIMARY KEY (cliente_id)
 );
 COMMENT ON TABLE lojas.clientes IS 'Essa Tabela serve para o cadastro dos usuários (clientes).';
 COMMENT ON COLUMN lojas.clientes.cliente_id IS 'Essa coluna serve para indentificação de cada usuário (cliente).';
@@ -132,13 +132,13 @@ COMMENT ON COLUMN lojas.clientes.telefone3 IS 'Essa coluna serve para cadastrar 
 Essa tabela "envios" possui duas "CONSTRAINT" sendo que, uma é para a coluna "status" que está com apelido de "envios_status_ck" e só pode possuir os valores: CRIADO, ENVIADO, TRANSITO, e ENTREGUE.
 */
 CREATE TABLE lojas.envios (
-                envio_id NUMERIC(38) NOT NULL,
-                loja_id NUMERIC(38) NOT NULL,
-                cliente_id NUMERIC(38) NOT NULL,
-                endereco_entrega VARCHAR(512) NOT NULL,
-                status VARCHAR(15) NOT NULL,
-                CONSTRAINT envios_pk PRIMARY KEY (envio_id),
-                CONSTRAINT envios_status_ck CHECK (status IN ('CRIADO', 'ENVIADO', 'TRANSITO', 'ENTREGUE'))
+    envio_id                    NUMERIC(38) NOT NULL,
+    loja_id                     NUMERIC(38) NOT NULL,
+    cliente_id                  NUMERIC(38) NOT NULL,
+    endereco_entrega            VARCHAR(512) NOT NULL,
+    status                      VARCHAR(15) NOT NULL,
+    CONSTRAINT envios_pk PRIMARY KEY (envio_id),
+    CONSTRAINT envios_status_ck CHECK (status IN ('CRIADO', 'ENVIADO', 'TRANSITO', 'ENTREGUE'))
 );
 COMMENT ON TABLE lojas.envios IS 'Essa tabela serve para o controle de envios dos produtos das lojas UVV.';
 COMMENT ON COLUMN lojas.envios.envio_id IS 'Essa coluna é a identificação (ID) dos envios dos produtos das lojas UVV.';
@@ -151,13 +151,13 @@ COMMENT ON COLUMN lojas.envios.status IS 'Essa coluna serve para colocar o statu
 Essa tabela "pedidos" possui duas "CONSTRAINT" sendo que, uma é para a coluna "status" que está com apelido de "pedidos_status_ck" e só pode possuir os valores: CANCELADO, COMPLETO, ABERTO, PAGO, REEMBOLSADO e ENVIADO.
 */
 CREATE TABLE lojas.pedidos (
-                pedido_id NUMERIC(38) NOT NULL,
-                data_hora TIMESTAMP NOT NULL,
-                cliente_id NUMERIC(38) NOT NULL,
-                status VARCHAR(15) NOT NULL,
-                loja_id NUMERIC(38) NOT NULL,
-                CONSTRAINT pedidos_pk PRIMARY KEY (pedido_id),
-                CONSTRAINT pedidos_status_ck CHECK (status IN ('CANCELADO', 'COMPLETO', 'ABERTO', 'PAGO', 'REEMBOLSADO', 'ENVIADO'))
+    pedido_id                   NUMERIC(38) NOT NULL,
+    data_hora                   TIMESTAMP NOT NULL,
+    cliente_id                  NUMERIC(38) NOT NULL,
+    status                      VARCHAR(15) NOT NULL,
+    loja_id                     NUMERIC(38) NOT NULL,
+    CONSTRAINT pedidos_pk PRIMARY KEY (pedido_id),
+    CONSTRAINT pedidos_status_ck CHECK (status IN ('CANCELADO', 'COMPLETO', 'ABERTO', 'PAGO', 'REEMBOLSADO', 'ENVIADO'))
 );
 COMMENT ON TABLE lojas.pedidos IS 'Essa tabela serve para administrar os pedidos dos usuários (clientes).';
 COMMENT ON COLUMN lojas.pedidos.data_hora IS 'Essa coluna serve para registrar a data e hora do pedido do usuário (cliente).';
@@ -169,15 +169,15 @@ COMMENT ON COLUMN lojas.pedidos.loja_id IS 'Essa coluna é uma "FK". Serve para 
 A tabela "pedidos_itens" possui tres "CONSTRAINT" sendo que, duas são para as colunas "preco_unitario" e "quantidade" onde os valores não podem ser menores que zero.
 */
 CREATE TABLE lojas.pedidos_itens (
-                pedido_id NUMERIC(38) NOT NULL,
-                produto_id NUMERIC(38) NOT NULL,
-                numero_da_linha NUMERIC(38) NOT NULL,
-                preco_unitario NUMERIC(10,2) NOT NULL,
-                quantidade NUMERIC(38) NOT NULL,
-                envio_id NUMERIC(38),
-                CONSTRAINT pedidos_itens_pk PRIMARY KEY (pedido_id, produto_id),
-                CONSTRAINT pedidos_itens_preco_unitario_ck CHECK (preco_unitario >= 0),
-                CONSTRAINT pedidos_itens_quantidade_ck CHECK (quantidade >= 0)
+    pedido_id                   NUMERIC(38) NOT NULL,
+    produto_id                  NUMERIC(38) NOT NULL,
+    numero_da_linha             NUMERIC(38) NOT NULL,
+    preco_unitario              NUMERIC(10,2) NOT NULL,
+    quantidade                  NUMERIC(38) NOT NULL,
+    envio_id                    NUMERIC(38),
+    CONSTRAINT pedidos_itens_pk PRIMARY KEY (pedido_id, produto_id),
+    CONSTRAINT pedidos_itens_preco_unitario_ck CHECK (preco_unitario >= 0),
+    CONSTRAINT pedidos_itens_quantidade_ck CHECK (quantidade >= 0)
 );
 COMMENT ON TABLE lojas.pedidos_itens IS 'Essa tabela serve para cadastra os itens dos pedidos.';
 COMMENT ON COLUMN lojas.pedidos_itens.pedido_id IS 'Essa coluna é uma "PFK". Serve para cadastrar a identificação do pedido (ID) e faz um relacionamento com a tabela "pedidos", coluna "pedido_id" que é a "PK".';
